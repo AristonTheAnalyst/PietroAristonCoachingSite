@@ -1,0 +1,41 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-11-11T02:04:55.203Z",
+        "reason": "Only two hits: the edge-to-edge decorative ticker (intentional) and the pairing rows, which already have clamp(1.75rem,3vw,2.5rem) padding-block inside a section rule."
+      },
+      {
+        "rule": "marquee",
+        "value": "*",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-11-11T02:05:01.578Z",
+        "reason": "Existing decorative ticker; animation is disabled under prefers-reduced-motion and the strip is announced via aria-label."
+      },
+      {
+        "rule": "overused-font",
+        "value": "fraunces",
+        "createdAt": "2026-11-11T02:05:04.877Z",
+        "reason": "Fraunces is a comparison face in the Developers type lab, not the site's primary font."
+      },
+      {
+        "rule": "overused-font",
+        "value": "instrument sans",
+        "files": [
+          "goals/index.html"
+        ],
+        "createdAt": "2026-11-17T07:11:11.960Z",
+        "reason": "Goals page uses the site's type direction; the typeface is a site-wide design decision tracked on the main page."
+      }
+    ]
+  }
+}

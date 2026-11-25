@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Goals — Pietro Ariston</title>
+  <meta name="description" content="The twenty exercises Pietro Ariston coaches, with twelve goals across max strength, absolute strength, and strength endurance.">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="canonical" href="https://pietroariston.com/goals/">
+
+  <meta property="og:title" content="Goals — Pietro Ariston">
+  <meta property="og:description" content="The twenty exercises, three rep ranges, twelve goals each.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://pietroariston.com/goals/">
+  <meta name="twitter:card" content="summary">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css?v=2026-11-16-a">
+
+  <style>
+    :root {
+      --goal-achieved: #EB912B;
+      --goal-pending: #cfcfcf;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      padding-top: 0;
+    }
+
+    .goals-header {
+      border-bottom: 1px solid var(--line);
+    }
+
+    .goals-header__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      padding-block: 1.25rem;
+    }
+
+    .goals-back {
+      color: var(--muted);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      line-height: 1.4;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .goals-back:hover,
+    .goals-back:focus-visible {
+      color: var(--ink);
+    }
+
+    .goals-page {
+      flex: 1;
+      padding-block: clamp(3rem, 6vw, 5rem) clamp(4rem, 8vw, 6rem);
+    }
+
+    .goals-intro {
+      max-width: 46rem;
+    }
+
+    .goals-intro h1 {
+      margin: 0;
+      font-size: clamp(3rem, 7vw, 5rem);
+      line-height: 1;
+      letter-spacing: -0.05em;
+    }
+
+    .goals-lede {
+      max-width: 38rem;
+      margin: 1.5rem 0 0;
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.6;
+      text-wrap: pretty;
+    }
+
+    .goal-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: clamp(2.5rem, 5vw, 4rem);
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .goal-filter {
+      padding: 0.65rem 1rem;
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius-pill);
+      background: transparent;
+      color: var(--muted);
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      font-weight: 500;
+      line-height: 1.2;
+      cursor: pointer;
+    }
+
+    .goal-filter:hover,
+    .goal-filter:focus-visible {
+      border-color: var(--ink);
+      color: var(--ink);
+    }
+
+    .goal-filter.is-active {
+      border-color: var(--ink);
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    .goal-tools {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+    }
+
+    .goal-tool-wrap {
+      position: relative;
+    }
+
+    .goal-tool {
+      padding: 0.55rem 0.85rem;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-pill);
+      background: var(--paper);
+      color: var(--muted);
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 500;
+      line-height: 1.2;
+      cursor: pointer;
+    }
+
+    .goal-tool:hover,
+    .goal-tool:focus-visible,
+    .goal-tool[aria-expanded="true"],
+    .goal-tool[aria-pressed="true"] {
+      border-color: var(--ink);
+      color: var(--ink);
+    }
+
+    .goal-tool[aria-pressed="true"] {
+      background: var(--soft);
+    }
+
+    .goal-menu,
+    .goal-filter-panel {
+      position: absolute;
+      z-index: 10;
+      top: calc(100% + 0.4rem);
+      left: 0;
+      min-width: 13rem;
+      padding: 0.5rem;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: var(--paper);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+    }
+
+    .goal-menu button {
+      display: block;
+      width: 100%;
+      padding: 0.5rem 0.6rem;
+      border: 0;
+      border-radius: 6px;
+      background: transparent;
+      color: var(--muted);
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .goal-menu button:hover,
+    .goal-menu button.is-active {
+      background: var(--soft);
+      color: var(--ink);
+    }
+
+    .goal-filter-panel {
+      right: 0;
+      left: auto;
+      width: min(22rem, calc(100vw - (2 * var(--gutter))));
+      max-height: 24rem;
+      overflow-y: auto;
+      padding: 1rem;
+    }
+
+    .goal-filter-group + .goal-filter-group {
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--line);
+    }
+
+    .goal-filter-group__title {
+      margin: 0 0 0.5rem;
+      color: var(--muted);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      line-height: 1.4;
+      text-transform: uppercase;
+    }
+
+    .goal-filter-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem 0.75rem;
+    }
+
+    .goal-filter-option {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      color: var(--ink);
+      font-size: 0.8rem;
+      line-height: 1.4;
+      cursor: pointer;
+    }
+
+    .goal-filter-option input {
+      margin: 0;
+      accent-color: var(--ink);
+    }
+
+    .goal-filter-clear {
+      margin-top: 1rem;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    .goals-list {
+      margin-top: 0.5rem;
+    }
+
+    .goal-row {
+      padding-block: 1.35rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .goal-row__head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .goal-row__title {
+      min-width: 0;
+    }
+
+    .goal-row__head h2 {
+      margin: 0;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 600;
+      line-height: 1.35;
+    }
+
+    .goal-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+      margin-top: 0.45rem;
+    }
+
+    .goals-list:not(.is-tags-visible) .goal-tags {
+      display: none;
+    }
+
+    .goal-tag {
+      padding: 0.15rem 0.45rem;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-pill);
+      color: var(--muted);
+      font-size: 0.7rem;
+      font-weight: 500;
+      line-height: 1.35;
+    }
+
+    .goal-tag--section {
+      border-color: var(--line-strong);
+      color: var(--ink);
+    }
+
+    .goal-tag--purpose {
+      background: var(--soft);
+    }
+
+    .goal-labels {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+    }
+
+    .goal-labels--big {
+      margin-bottom: 0.45rem;
+    }
+
+    .goal-labels--small {
+      margin-top: 0.45rem;
+    }
+
+    .goal-label {
+      color: var(--muted);
+      font-size: 0.7rem;
+      font-weight: 500;
+      line-height: 1.35;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .goal-ladder {
+      display: none;
+    }
+
+    .goal-block {
+      position: relative;
+      padding-top: 1.55rem;
+      padding-bottom: 1.4rem;
+    }
+
+    .goal-block__header {
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .goal-block__goal {
+      font-size: 0.95rem;
+      font-weight: 600;
+      line-height: 1.35;
+    }
+
+    .goal-block__stars {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      align-items: center;
+      justify-items: center;
+      background-image: linear-gradient(var(--goal-pending), var(--goal-pending));
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 75% 1px;
+    }
+
+    .goal-block__labels {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .goal-stars {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      align-items: center;
+      justify-items: center;
+      margin-top: 0.9rem;
+    }
+
+    .goal-stars::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: calc(100% / 24);
+      left: calc(100% / 24);
+      height: 1px;
+      background: var(--goal-pending);
+    }
+
+    .goal-star {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      place-items: center;
+      width: clamp(1.5rem, 6vw, 2.8rem);
+      height: clamp(1.5rem, 6vw, 2.8rem);
+      border: 1px solid var(--goal-pending);
+      border-radius: 50%;
+      background: var(--paper);
+      color: var(--goal-pending);
+      line-height: 1;
+    }
+
+    .goal-star svg {
+      display: block;
+      width: 80%;
+      height: 80%;
+      fill: currentColor;
+    }
+
+    .goal-star--primary {
+      width: clamp(1.8rem, 7vw, 3.2rem);
+      height: clamp(1.8rem, 7vw, 3.2rem);
+      border-width: 1px;
+    }
+
+    .goal-star.is-achieved {
+      border-color: var(--goal-achieved);
+      color: var(--goal-achieved);
+    }
+
+    /* Motion: the goal track draws, then the stars arrive in sequence. */
+    .goal-filter,
+    .goal-tool {
+      transition:
+        background-color 160ms var(--ease-out),
+        border-color 160ms var(--ease-out),
+        color 160ms var(--ease-out);
+    }
+
+    .goal-menu button {
+      transition:
+        background-color 140ms var(--ease-out),
+        color 140ms var(--ease-out);
+    }
+
+    .goal-filter-option {
+      transition: color 140ms var(--ease-out);
+    }
+
+    .goal-row {
+      transition: background-color 160ms var(--ease-out);
+    }
+
+    .goal-stars::before {
+      transform: scaleX(0);
+      transform-origin: left center;
+      transition: transform 620ms var(--ease-out);
+    }
+
+    .goal-row.is-visible .goal-stars::before {
+      transform: scaleX(1);
+    }
+
+    .goal-star {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+
+    .goal-row.is-visible .goal-star {
+      animation: star-in 300ms var(--ease-out) both;
+      animation-delay: calc(var(--star-index, 0) * 18ms);
+    }
+
+    @keyframes star-in {
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .goal-star svg {
+      transition: transform 160ms var(--ease-out);
+    }
+
+    @media (hover: hover) {
+      .goal-star:hover svg {
+        transform: scale(1.08);
+      }
+
+      .goal-row:hover {
+        background: var(--soft);
+      }
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .goals-list.is-tags-visible .goal-tags {
+        animation: tags-in 180ms var(--ease-out) both;
+      }
+
+      .goal-menu:not([hidden]),
+      .goal-filter-panel:not([hidden]) {
+        animation: menu-in 160ms var(--ease-out) both;
+      }
+    }
+
+    @keyframes tags-in {
+      from {
+        opacity: 0;
+        transform: translateY(-3px);
+      }
+    }
+
+    @keyframes menu-in {
+      from {
+        opacity: 0;
+        transform: translateY(-4px) scale(0.98);
+      }
+    }
+
+    .goal-menu {
+      transform-origin: top left;
+    }
+
+    .goal-filter-panel {
+      transform-origin: top right;
+    }
+
+    .goals-note {
+      max-width: 36rem;
+      margin: 1.5rem 0 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    .goals-footer {
+      border-top: 1px solid var(--line);
+    }
+
+    .goals-footer__inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      padding-block: 1.5rem;
+      color: var(--muted);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      line-height: 1.4;
+      text-transform: uppercase;
+    }
+
+    .goals-footer a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .goals-footer a:hover,
+    .goals-footer a:focus-visible {
+      color: var(--ink);
+    }
+
+    @media (max-width: 760px) {
+      .goals-header__inner {
+        align-items: flex-start;
+      }
+
+      .goal-track {
+        display: none;
+      }
+
+      .goal-row {
+        padding-block: 1.75rem;
+      }
+
+      .goal-ladder {
+        display: grid;
+        gap: 1.75rem;
+        margin-top: 1.1rem;
+      }
+
+      .goals-footer__inner {
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .goal-star {
+        width: 1.3rem;
+        height: 1.3rem;
+      }
+
+      .goal-star--primary {
+        width: 1.55rem;
+        height: 1.55rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .goal-star,
+      .goal-row.is-visible .goal-star {
+        opacity: 1;
+        transform: none;
+        animation: none;
+      }
+
+      .goal-stars::before,
+      .goal-row.is-visible .goal-stars::before {
+        transform: none;
+        transition: none;
+      }
+
+      .goals-list.is-tags-visible .goal-tags,
+      .goal-menu:not([hidden]),
+      .goal-filter-panel:not([hidden]) {
+        animation: none;
+      }
+
+      .goal-row,
+      .goal-filter,
+      .goal-tool,
+      .goal-menu button,
+      .goal-filter-option {
+        transition: none;
+      }
+
+      .goal-star svg,
+      .goal-star:hover svg {
+        transform: none;
+        transition: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="goals-header">
+    <div class="container goals-header__inner">
+      <a class="brand" href="../" aria-label="Pietro Ariston, back to home">
+        <span class="brand__name">Pietro Ariston</span>
+        <span class="brand__role">Strength Coaching</span>
+      </a>
+      <a class="goals-back" href="../">Back to site <span aria-hidden="true">↑</span></a>
+    </div>
+  </header>
+
+  <main id="main" class="goals-page">
+    <div class="container">
+      <header class="goals-intro">
+        <h1>Goals.</h1>
+        <p class="goals-lede">The twenty exercises, three rep ranges, twelve goals each. The 4th, 8th, and 12th stars are primary goals; the rest are milestones.</p>
+      </header>
+
+      <div class="goal-filters" role="group" aria-label="Filter goals by rep range">
+        <button class="goal-filter is-active" type="button" data-category="max" aria-pressed="true">Max Strength</button>
+        <button class="goal-filter" type="button" data-category="absolute" aria-pressed="false">Absolute Strength</button>
+        <button class="goal-filter" type="button" data-category="endurance" aria-pressed="false">Strength Endurance</button>
+      </div>
+
+      <div class="goal-tools">
+        <button class="goal-tool" id="toggle-tags" type="button" aria-pressed="false">Tags</button>
+        <div class="goal-tool-wrap">
+          <button class="goal-tool" id="toggle-sort" type="button" aria-expanded="false" aria-controls="sort-menu">Sort</button>
+          <div class="goal-menu" id="sort-menu" hidden>
+            <button type="button" data-sort="name" class="is-active">Name</button>
+            <button type="button" data-sort="section">Section</button>
+            <button type="button" data-sort="body">Body part</button>
+            <button type="button" data-sort="purpose">Purpose</button>
+          </div>
+        </div>
+        <div class="goal-tool-wrap">
+          <button class="goal-tool" id="toggle-filter" type="button" aria-expanded="false" aria-controls="filter-panel">Filter</button>
+          <div class="goal-filter-panel" id="filter-panel" hidden>
+            <div class="goal-filter-group">
+              <p class="goal-filter-group__title">Section</p>
+              <div class="goal-filter-options" id="filter-section"></div>
+            </div>
+            <div class="goal-filter-group">
+              <p class="goal-filter-group__title">Body part</p>
+              <div class="goal-filter-options" id="filter-body"></div>
+            </div>
+            <div class="goal-filter-group">
+              <p class="goal-filter-group__title">Purpose</p>
+              <div class="goal-filter-options" id="filter-purpose"></div>
+            </div>
+            <button class="goal-filter-clear" id="clear-filters" type="button">Clear filters</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="goals-list" class="goals-list"></div>
+
+      <p class="goals-note">Orange is achieved. Grey is still ahead.</p>
+      <noscript><p class="goals-note">This page needs JavaScript to render the goals list.</p></noscript>
+    </div>
+  </main>
+
+  <footer class="goals-footer">
+    <div class="container goals-footer__inner">
+      <span>© 2026 Pietro Ariston</span>
+      <a href="../">Back to site ↑</a>
+    </div>
+  </footer>
+
+  <script>
+    // Replace the placeholders with the twenty exercises. Each 12-character
+    // string is the achieved state for that rep range: 1 = achieved, 0 = still
+    // ahead. The 4th, 8th, and 12th stars are primary goals; the rest are
+    // milestones. Tags are provisional — correct them as needed. Some states
+    // are filled below to simulate achieved goals; replace them with real data.
+    const exercises = [
+      { name: "Power Clean", tags: { section: "Lower", body: ["Glutes", "Hamstrings", "Traps"], purpose: ["Power"] }, goals: { max: "111100000000", absolute: "000000000000", endurance: "000000000000" } },
+      { name: "Hip Thrust", tags: { section: "Lower", body: ["Glutes", "Hamstrings"], purpose: ["Hypertrophy"] }, goals: { max: "111111110000", absolute: "000000000000", endurance: "000000000000" } },
+      { name: "Nordic Curl", tags: { section: "Lower", body: ["Hamstrings"], purpose: ["Injury Prevention", "Hypertrophy"] }, goals: { max: "000000000000", absolute: "000100000000", endurance: "111100000000" } },
+      { name: "Squat", tags: { section: "Lower", body: ["Quads", "Glutes"], purpose: ["Hypertrophy"] }, goals: { max: "111111111111", absolute: "111100000000", endurance: "000011110000" } },
+      { name: "Barbell Row", tags: { section: "Upper", body: ["Back", "Lats", "Biceps"], purpose: ["Hypertrophy"] }, goals: { max: "000000000000", absolute: "000000000000", endurance: "000000000000" } },
+      { name: "Overhead Press", tags: { section: "Upper", body: ["Shoulders", "Triceps"], purpose: ["Hypertrophy"] }, goals: { max: "000000000000", absolute: "000000000000", endurance: "000000000000" } },
+      { name: "Broad Jump", tags: { section: "Lower", body: ["Quads", "Glutes", "Hamstrings"], purpose: ["Power"] }, goals: { max: "000000000001", absolute: "000000000000", endurance: "000000000000" } },
+      { name: "RDL", tags: { section: "Lower", body: ["Hamstrings", "Glutes"], purpose: ["Hypertrophy", "Injury Prevention"] }, goals: { max: "000000000000", absolute: "111111111111", endurance: "000000000000" } },
+      { name: "Bench Press", tags: { section: "Upper", body: ["Chest", "Triceps", "Shoulders"], purpose: ["Hypertrophy"] }, goalValues: { endurance: ["—", "—", "—", "70 kg × 20", "—", "—", "—", "80 kg × 20", "—", "—", "—", "90 kg × 20"] }, goals: { max: "000000000000", absolute: "111111110000", endurance: "111111111000" } },
+      { name: "Tib Raise", tags: { section: "Lower", body: ["Tibialis", "Calves"], purpose: ["Injury Prevention"] }, goals: { max: "000000000000", absolute: "000000000000", endurance: "000000000000" } },
+      { name: "Lunge", tags: { section: "Lower", body: ["Quads", "Glutes", "Hamstrings"], purpose: ["Hypertrophy"] }, goals: { max: "000000000000", absolute: "000000000000", endurance: "000000000000" } },
+      { name: "Incline Bench Press", tags: { section: "Upper", body: ["Chest", "Shoulders", "Triceps"], purpose: ["Hypertrophy"] }, goals: { max: "000000000000", absolute: "000000000000", endurance: "000000000000" } },
+      { name: "Calf Raise", tags: { section: "Lower", body: ["Calves"], purpose: ["Hypertrophy"] }, goals: { max: "111111111111", absolute: "000000000000", endurance: "111111111111" } },
+      { name: "Trap Bar Jump", tags: { section: "Lower", body: ["Quads", "Glutes", "Hamstrings"], purpose: ["Power"] }, goals: { max: "000000000000", absolute: "000000000000", endurance: "000000000000" } },
+      { name: "Single Leg RDL", tags: { section: "Lower", body: ["Hamstrings", "Glutes"], purpose: ["Injury Prevention", "Hypertrophy"] }, goals: { max: "000000000000", absolute: "000000000000", endurance: "111111111111" } },
+      { name: "Exercise 16", tags: { section: "", body: [], purpose: [] }, goals: { max: "000000000000", absolute: "000000000000", endurance: "000000000000" } },
+      { name: "Exercise 17", tags: { section: "", body: [], purpose: [] }, goals: { max: "000000000000", absolute: "000000000000", endurance: "000000000000" } },
+      { name: "Exercise 18", tags: { section: "", body: [], purpose: [] }, goals: { max: "000000000000", absolute: "000000000000", endurance: "000000000000" } },
+      { name: "Exercise 19", tags: { section: "", body: [], purpose: [] }, goals: { max: "000000000000", absolute: "000000000000", endurance: "000000000000" } },
+      { name: "Exercise 20", tags: { section: "", body: [], purpose: [] }, goals: { max: "000000000000", absolute: "000000000000", endurance: "000000000000" } }
+    ];
+
+    const SECTION_ORDER = ["Upper", "Lower"];
+    const PURPOSE_ORDER = ["Power", "Hypertrophy", "Injury Prevention"];
+    const filters = Array.from(document.querySelectorAll(".goal-filter"));
+    const list = document.querySelector("#goals-list");
+    const tagsButton = document.querySelector("#toggle-tags");
+    const sortButton = document.querySelector("#toggle-sort");
+    const sortMenu = document.querySelector("#sort-menu");
+    const filterButton = document.querySelector("#toggle-filter");
+    const filterPanel = document.querySelector("#filter-panel");
+    const clearFilters = document.querySelector("#clear-filters");
+
+    const selectedFilters = {
+      section: new Set(),
+      body: new Set(),
+      purpose: new Set()
+    };
+
+    let activeCategory = "max";
+    let sortKey = "name";
+    let tagsVisible = false;
+
+    const makeTag = (text, type) => {
+      const tag = document.createElement("span");
+      tag.className = `goal-tag goal-tag--${type}`;
+      tag.textContent = text;
+      return tag;
+    };
+
+    const renderStars = (achieved, goalValues) => {
+      const stars = [];
+
+      for (let index = 0; index < 12; index += 1) {
+        const star = document.createElement("span");
+        star.className = "goal-star";
+
+        const isPrimary = (index + 1) % 4 === 0;
+        if (isPrimary) star.classList.add("goal-star--primary");
+        if (achieved[index] === "1") star.classList.add("is-achieved");
+
+        if (goalValues?.[index]) {
+          star.title = `${goalValues[index]} — ${isPrimary ? "primary goal" : "milestone"}`;
+        }
+
+        star.setAttribute("aria-hidden", "true");
+        star.style.setProperty("--star-index", String(index));
+        star.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 1.5l3.09 6.26 6.91 1.01-5 4.87L18.18 20.5 12 17.27 5.82 20.5 7 13.64l-5-4.87 6.91-1.01L12 1.5z"/></svg>';
+        stars.push(star);
+      }
+
+      return stars;
+    };
+
+    const matchesFilters = (exercise) => {
+      const { section, body, purpose } = exercise.tags;
+
+      if (selectedFilters.section.size && !selectedFilters.section.has(section)) return false;
+      if (selectedFilters.body.size && !body.some((tag) => selectedFilters.body.has(tag))) return false;
+      if (selectedFilters.purpose.size && !purpose.some((tag) => selectedFilters.purpose.has(tag))) return false;
+
+      return true;
+    };
+
+    const sortExercises = (a, b) => {
+      if (sortKey === "name") return a.name.localeCompare(b.name);
+
+      if (sortKey === "section") {
+        const aIndex = SECTION_ORDER.indexOf(a.tags.section);
+        const bIndex = SECTION_ORDER.indexOf(b.tags.section);
+        const aOrder = aIndex === -1 ? 99 : aIndex;
+        const bOrder = bIndex === -1 ? 99 : bIndex;
+        return aOrder - bOrder || a.name.localeCompare(b.name);
+      }
+
+      if (sortKey === "body") {
+        const aTag = a.tags.body[0] || "￿";
+        const bTag = b.tags.body[0] || "￿";
+        return aTag.localeCompare(bTag) || a.name.localeCompare(b.name);
+      }
+
+      if (sortKey === "purpose") {
+        const aIndex = PURPOSE_ORDER.indexOf(a.tags.purpose[0]);
+        const bIndex = PURPOSE_ORDER.indexOf(b.tags.purpose[0]);
+        const aOrder = aIndex === -1 ? 99 : aIndex;
+        const bOrder = bIndex === -1 ? 99 : bIndex;
+        return aOrder - bOrder || a.name.localeCompare(b.name);
+      }
+
+      return 0;
+    };
+
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const rowObserver = !prefersReducedMotion && "IntersectionObserver" in window
+      ? new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add("is-visible");
+            rowObserver.unobserve(entry.target);
+          });
+        }, { rootMargin: "0px 0px -6% 0px", threshold: 0.05 })
+      : null;
+
+    const observeRows = () => {
+      const rows = Array.from(list.querySelectorAll(".goal-row"));
+
+      if (!rowObserver) {
+        rows.forEach((row) => row.classList.add("is-visible"));
+        return;
+      }
+
+      rows.forEach((row) => rowObserver.observe(row));
+    };
+
+    const render = () => {
+      rowObserver?.disconnect();
+      list.replaceChildren();
+      const visible = exercises.filter(matchesFilters).sort(sortExercises);
+
+      visible.forEach((exercise) => {
+        const achieved = exercise.goals[activeCategory];
+        const achievedCount = [...achieved].filter((bit) => bit === "1").length;
+        const goalValues = exercise.goalValues?.[activeCategory];
+
+        const row = document.createElement("article");
+        row.className = "goal-row";
+
+        const head = document.createElement("div");
+        head.className = "goal-row__head";
+
+        const titleWrap = document.createElement("div");
+        titleWrap.className = "goal-row__title";
+
+        const title = document.createElement("h2");
+        title.textContent = exercise.name;
+
+        const tags = document.createElement("div");
+        tags.className = "goal-tags";
+
+        if (exercise.tags.section) tags.append(makeTag(exercise.tags.section, "section"));
+        exercise.tags.body.forEach((tag) => tags.append(makeTag(tag, "body")));
+        exercise.tags.purpose.forEach((tag) => tags.append(makeTag(tag, "purpose")));
+
+        titleWrap.append(title, tags);
+
+        head.append(titleWrap);
+
+        const stars = document.createElement("div");
+        stars.className = "goal-stars";
+        stars.setAttribute("role", "img");
+        stars.setAttribute("aria-label", `${achievedCount} of 12 goals achieved`);
+        stars.append(...renderStars(achieved, goalValues));
+
+        const bigLabels = document.createElement("div");
+        bigLabels.className = "goal-labels goal-labels--big";
+        const smallLabels = document.createElement("div");
+        smallLabels.className = "goal-labels goal-labels--small";
+
+        if (goalValues) {
+          goalValues.forEach((goal, index) => {
+            if (!goal) return;
+
+            const label = document.createElement("span");
+            label.className = "goal-label";
+            label.style.gridColumn = String(index + 1);
+            label.textContent = goal;
+
+            if ((index + 1) % 4 === 0) {
+              bigLabels.append(label);
+            } else {
+              smallLabels.append(label);
+            }
+          });
+        }
+
+        const track = document.createElement("div");
+        track.className = "goal-track";
+
+        if (goalValues) {
+          track.append(bigLabels, stars, smallLabels);
+        } else {
+          track.append(stars);
+        }
+
+        const ladder = document.createElement("div");
+        ladder.className = "goal-ladder";
+
+        for (let blockIndex = 0; blockIndex < 3; blockIndex += 1) {
+          const start = blockIndex * 4;
+          const primaryIndex = start + 3;
+          const blockGoals = goalValues?.slice(start, primaryIndex + 1);
+          const primaryGoal = blockGoals?.[3];
+          const block = document.createElement("div");
+          block.className = "goal-block";
+
+          if (primaryGoal) {
+            const header = document.createElement("div");
+            header.className = "goal-block__header";
+
+            const goal = document.createElement("span");
+            goal.className = "goal-block__goal";
+            goal.textContent = primaryGoal;
+
+            header.append(goal);
+            block.append(header);
+          }
+
+          const blockStars = document.createElement("div");
+          blockStars.className = "goal-block__stars";
+          blockStars.append(...renderStars(achieved.slice(start, primaryIndex + 1), blockGoals));
+          block.append(blockStars);
+
+          if (blockGoals) {
+            const labels = document.createElement("div");
+            labels.className = "goal-block__labels";
+
+            blockGoals.slice(0, 3).forEach((goal, offset) => {
+              if (!goal) return;
+
+              const label = document.createElement("span");
+              label.className = "goal-label";
+              label.style.gridColumn = String(offset + 1);
+              label.textContent = goal;
+              labels.append(label);
+            });
+
+            if (labels.childElementCount) block.append(labels);
+          }
+
+          ladder.append(block);
+        }
+
+        row.append(head, track, ladder);
+
+        list.append(row);
+      });
+
+      observeRows();
+    };
+
+    const buildFilterOptions = (container, values, group) => {
+      values.forEach((value) => {
+        const label = document.createElement("label");
+        label.className = "goal-filter-option";
+
+        const input = document.createElement("input");
+        input.type = "checkbox";
+        input.value = value;
+        input.addEventListener("change", () => {
+          if (input.checked) {
+            selectedFilters[group].add(value);
+          } else {
+            selectedFilters[group].delete(value);
+          }
+          render();
+        });
+
+        label.append(input, document.createTextNode(value));
+        container.append(label);
+      });
+    };
+
+    buildFilterOptions(document.querySelector("#filter-section"), SECTION_ORDER, "section");
+    buildFilterOptions(document.querySelector("#filter-purpose"), PURPOSE_ORDER, "purpose");
+    buildFilterOptions(
+      document.querySelector("#filter-body"),
+      [...new Set(exercises.flatMap((exercise) => exercise.tags.body))].sort(),
+      "body"
+    );
+
+    filters.forEach((filter) => {
+      filter.addEventListener("click", () => {
+        activeCategory = filter.dataset.category;
+
+        filters.forEach((button) => {
+          const isActive = button === filter;
+          button.classList.toggle("is-active", isActive);
+          button.setAttribute("aria-pressed", String(isActive));
+        });
+
+        render();
+      });
+    });
+
+    tagsButton.addEventListener("click", () => {
+      tagsVisible = !tagsVisible;
+      list.classList.toggle("is-tags-visible", tagsVisible);
+      tagsButton.setAttribute("aria-pressed", String(tagsVisible));
+    });
+
+    sortButton.addEventListener("click", () => {
+      const isOpen = sortMenu.hidden;
+      sortMenu.hidden = !isOpen;
+      sortButton.setAttribute("aria-expanded", String(isOpen));
+    });
+
+    sortMenu.querySelectorAll("[data-sort]").forEach((button) => {
+      button.addEventListener("click", () => {
+        sortKey = button.dataset.sort;
+        sortMenu.querySelectorAll("[data-sort]").forEach((option) => {
+          option.classList.toggle("is-active", option === button);
+        });
+        sortMenu.hidden = true;
+        sortButton.setAttribute("aria-expanded", "false");
+        render();
+      });
+    });
+
+    filterButton.addEventListener("click", () => {
+      const isOpen = filterPanel.hidden;
+      filterPanel.hidden = !isOpen;
+      filterButton.setAttribute("aria-expanded", String(isOpen));
+    });
+
+    clearFilters.addEventListener("click", () => {
+      Object.values(selectedFilters).forEach((set) => set.clear());
+      filterPanel.querySelectorAll("input[type=checkbox]").forEach((input) => {
+        input.checked = false;
+      });
+      render();
+    });
+
+    render();
+  </script>
+</body>
+</html>

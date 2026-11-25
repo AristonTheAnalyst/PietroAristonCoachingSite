@@ -1,0 +1,7 @@
+# Impeccable — the cache is machine-local; config keeps the rule exemptions.
+.impeccable/*
+!.impeccable/config.json
+
+# Claude Code — shared skills are tracked; personal settings stay local.
+.claude/*
+!.claude/skills/
