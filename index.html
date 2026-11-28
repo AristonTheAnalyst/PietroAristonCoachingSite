@@ -17,7 +17,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600&amp;family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&amp;family=Fraunces:opsz,wght@9..144,600&amp;family=Instrument+Sans:wght@400;500;600&amp;family=Manrope:wght@400;500&amp;display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=2026-11-16-a">
+  <link rel="stylesheet" href="style.css?v=2026-11-28-i">
 
   <script>
     if ("IntersectionObserver" in window && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -64,15 +64,21 @@
 
   <main id="main">
     <section class="hero" aria-labelledby="hero-title">
-      <div class="placeholder hero__media" data-reveal="image" aria-hidden="true"></div>
       <div class="container hero__grid">
         <div class="hero__copy" data-reveal>
           <h1 class="hero__title" id="hero-title">
             <span>More than</span>
-            <span>coaching.</span>
+            <span>coaching</span>
           </h1>
-          <p class="hero__sub">Your training is a story we'll be writing together.<span class="hero__sub-line">Let's make it one worth telling.</span></p>
-          <a class="btn" href="#apply">Apply for coaching <span class="arrow" aria-hidden="true">→</span></a>
+          <p class="hero__sub" data-typewriter>
+            <span class="sr-only">Your training is a story we'll be writing together. Let's make it one worth telling.</span>
+            <span class="hero__sub-typed" aria-hidden="true"><span class="hero__sub-line" data-text="Your training is a story we'll be writing together.">Your training is a story we'll be writing together.</span><br><span class="hero__sub-line" data-text="Let's make it one worth telling.">Let's make it one worth telling.</span></span>
+          </p>
+          <a class="btn" href="#apply">Apply for coaching <span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M4 12h15"></path><path d="m13 6 6 6-6 6"></path></svg></span></a>
+        </div>
+
+        <div class="hero__media" data-reveal="image">
+          <img class="hero__image" src="assets/hero-v2b.jpg" alt="Pietro Ariston, front physique" width="1400" height="1580" fetchpriority="high" decoding="async">
         </div>
       </div>
     </section>
@@ -83,24 +89,44 @@
         <div class="carousel" data-carousel>
           <div class="feature-cards carousel__track" data-reveal-group role="group" aria-label="How I coach" tabindex="0">
             <article class="feature-card">
-              <span class="feature-card__icon" aria-hidden="true"></span>
+              <span class="feature-card__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" focusable="false">
+                  <rect x="5" y="3.5" width="14" height="17" rx="2.5"></rect>
+                  <path d="m8.75 12.25 2.2 2.2 4.4-4.9"></path>
+                </svg>
+              </span>
               <div>
                 <h3>Plan</h3>
-                <p>You bring the goal.<br>I make the plan.</p>
+                <p>You bring the goal.<br>I'll make the plan.</p>
               </div>
             </article>
             <article class="feature-card">
-              <span class="feature-card__icon" aria-hidden="true"></span>
+              <span class="feature-card__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" focusable="false">
+                  <path d="M4 9.5v5"></path>
+                  <path d="M7 7.5v9"></path>
+                  <path d="M17 7.5v9"></path>
+                  <path d="M20 9.5v5"></path>
+                  <path d="M7 12h10"></path>
+                </svg>
+              </span>
               <div>
                 <h3>Execute</h3>
-                <p>You do the work.<br>I keep you accountable.</p>
+                <p>You do the work.<br>I'll keep you accountable.</p>
               </div>
             </article>
             <article class="feature-card">
-              <span class="feature-card__icon" aria-hidden="true"></span>
+              <span class="feature-card__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" focusable="false">
+                  <path d="M4.5 4.5v15h15"></path>
+                  <path d="M8.5 16v-4"></path>
+                  <path d="M12.5 16V9.5"></path>
+                  <path d="M16.5 16V6.5"></path>
+                </svg>
+              </span>
               <div>
                 <h3>Review</h3>
-                <p>You log your sets.<br>I analyse the data.</p>
+                <p>You log your sets.<br>I'll analyse the data.</p>
               </div>
             </article>
           </div>
@@ -118,11 +144,40 @@
     <section class="section section--dark" id="system" aria-labelledby="system-title">
       <div class="container">
         <header class="section-heading section-heading--center section-heading--solo" data-reveal>
-          <h2 id="system-title">The Lambda Method</h2>
-          <p class="section-heading__tagline">Simple Training, Simple Results</p>
-          <p>Lambda is a way of training that focuses on two things: where you are headed and what's next.</p>
-          <p>The Lambda App is how I coach my clients and make training simpler for them.</p>
+          <h2 id="system-title">Lambda Coaching System</h2>
+                    <p class="section-heading__wide section-heading__statement">The secret to great results lies in trying to have zero unproductive sessions.</p>
+          <!--<p class="section-heading__tagline">Simple Training, Serious Results</p>-->
+           <!--<p>Pushing your limits is easy once you remember what they actually are.</p>-->
+          <p>The system I've designed allows me to analyse your training data across every:</p>
+          <ul>
+            <li>Every session</li>
+            <li>Every weight</li>
+            <li>Every rep-range</li>
+            <li>Every variation</li>
+            <li>For every exercise</li>
+          </ul>
+          <p class="section-heading__wide">With this data, I plan each session based on what you've actually done.</p>
+          <p class="section-heading__wide">Consistent wins are what will make your story worth telling. </p>
         </header>
+      </div>
+    </section>
+
+    <section class="section transformation" id="transformation" aria-labelledby="transformation-title">
+      <div class="container">
+        <header class="section-heading section-heading--center" data-reveal>
+          <h2 id="transformation-title">My Transformation</h2>
+        </header>
+
+        <div class="transformation__grid" data-reveal-group>
+          <figure class="transformation__item">
+            <img src="assets/pre-shred-v2.jpg" alt="Pietro before his cut, front physique" width="1116" height="1488" loading="lazy" decoding="async">
+            <figcaption>Pre-shred</figcaption>
+          </figure>
+          <figure class="transformation__item">
+            <img src="assets/post-shred.jpg" alt="Pietro after his cut, front physique" width="1200" height="1487" loading="lazy" decoding="async">
+            <figcaption>Post-shred</figcaption>
+          </figure>
+        </div>
       </div>
     </section>
 
@@ -281,7 +336,6 @@
         <p class="footer__tagline">Less guessing.<br>More lifting.</p>
         <nav class="footer__nav" aria-label="Footer">
           <a href="#coaching">Coaching</a>
-          <a href="/goals/">Goals</a>
           <a href="#about">About</a>
           <a href="#pricing">Pricing</a>
           <a href="#apply">Apply</a>
@@ -557,6 +611,52 @@
         window.addEventListener("resize", updateProgress, { passive: true });
         updateProgress();
       }
+    })();
+
+    (() => {
+      const sub = document.querySelector("[data-typewriter]");
+      if (!sub) return;
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+      const lines = Array.from(sub.querySelectorAll(".hero__sub-line"));
+      if (!lines.length) return;
+
+      const texts = lines.map((line) => line.dataset.text || line.textContent || "");
+      lines.forEach((line) => {
+        line.textContent = "";
+      });
+
+      const charDelay = 27;
+      const lineDelay = 380;
+      let lineIndex = 0;
+      let charIndex = 0;
+
+      const type = () => {
+        const line = lines[lineIndex];
+        const text = texts[lineIndex];
+        if (!line || !text) return;
+
+        if (charIndex === 0) {
+          if (lineIndex > 0) lines[lineIndex - 1].classList.remove("is-typing");
+          line.classList.add("is-typing");
+        }
+
+        charIndex += 1;
+        line.textContent = text.slice(0, charIndex);
+
+        if (charIndex < text.length) {
+          window.setTimeout(type, charDelay);
+          return;
+        }
+
+        if (lineIndex < lines.length - 1) {
+          lineIndex += 1;
+          charIndex = 0;
+          window.setTimeout(type, lineDelay);
+        }
+      };
+
+      window.setTimeout(type, 700);
     })();
   </script>
 </body>

@@ -5,3 +5,6 @@
 # Claude Code — shared skills are tracked; personal settings stay local.
 .claude/*
 !.claude/skills/
+
+# Source media — web-ready exports live in assets/.
+Website Images and Video/
